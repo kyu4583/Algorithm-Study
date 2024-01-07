@@ -21,26 +21,28 @@ public class p11501 {
                 lst.add(Integer.parseInt(st.nextToken()));
             }
 
-            List<Integer> action = new ArrayList<>(Collections.nCopies(N, 0));
+            int[] action = new int[N];
+            for (int j=0; j<N; j++) {
+                action[j] = 0;
+            }
+
             int start = 0;
             for (int max = maxIndex(lst, 0); max < lst.size(); max = maxIndex(lst, max + 1)) {
                 for (int j = start; j < max; j++) {
-                    action.remove(j);
-                    action.add(j, 1);
+                    action[j] = 1;
                 }
-                action.remove(max);
-                action.add(max, 2);
+                action[max] = 2;
                 start = max + 1;
             }
 
             int answer = 0;
             int purchase = 0;
             for (int j = 0; j < N; j++) {
-                if (action.get(j) == 1) {
+                if (action[j] == 1) {
                     answer -= lst.get(j);
                     purchase += 1;
                 }
-                if (action.get(j) == 2) {
+                if (action[j] == 2) {
                     answer += lst.get(j) * purchase;
                     purchase = 0;
                 }
