@@ -22,17 +22,20 @@ public class p11501 {
             }
 
             int[] action = new int[N];
-            for (int j=0; j<N; j++) {
+            for (int j = 0; j < N; j++) {
                 action[j] = 0;
             }
 
-            int start = 0;
-            for (int max = maxIndex(lst, 0); max < lst.size(); max = maxIndex(lst, max + 1)) {
-                for (int j = start; j < max; j++) {
+            int max = N - 1;
+            boolean peakIsExist = false;
+            for (int j = N - 1; j >= 0; j--) {
+                if (lst.get(j) > lst.get(max)) {
+                    action[j] = 2;
+                    max = j;
+                    peakIsExist = true;
+                } else if (peakIsExist) {
                     action[j] = 1;
                 }
-                action[max] = 2;
-                start = max + 1;
             }
 
             long answer = 0;    //오버플로
@@ -53,18 +56,5 @@ public class p11501 {
 
         bw.flush();
 
-    }
-
-    public static int maxIndex(ArrayList<Integer> lst, int start) {
-        if (start > lst.size() - 1) {
-            return start;
-        }
-        int max = start;
-        for (int i = start; i < lst.size(); i++) {
-            if (lst.get(i) > lst.get(max)) {
-                max = i;
-            }
-        }
-        return max;
     }
 }
