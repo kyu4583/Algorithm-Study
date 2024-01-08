@@ -15,7 +15,7 @@ public class p11501 {
 
         for (int i = 0; i < T; i++) {
             int N = Integer.parseInt(br.readLine());
-            List<Integer> lst = new ArrayList<>();
+            ArrayList<Integer> lst = new ArrayList<>();
             StringTokenizer st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
                 lst.add(Integer.parseInt(st.nextToken()));
@@ -35,7 +35,7 @@ public class p11501 {
                 start = max + 1;
             }
 
-            int answer = 0;
+            long answer = 0;    //오버플로
             int purchase = 0;
             for (int j = 0; j < N; j++) {
                 if (action[j] == 1) {
@@ -48,14 +48,14 @@ public class p11501 {
                 }
             }
 
-            bw.write(Integer.toString(answer) + "\n");
+            bw.write(Long.toString(answer) + "\n");
         }
 
         bw.flush();
 
     }
 
-    public static int maxIndex(List<Integer> lst, int start) {
+    public static int maxIndex(ArrayList<Integer> lst, int start) {
         if (start > lst.size() - 1) {
             return start;
         }
