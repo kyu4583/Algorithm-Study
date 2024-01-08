@@ -27,16 +27,15 @@ public class p11501 {
             }
 
             int max = N - 1;
-            boolean peakIsExist = false;
-            for (int j = N - 1; j >= 0; j--) {
-                if (lst.get(j) > lst.get(max)) {
+            for (int j = N - 2; j >= 0; j--) {
+                if (lst.get(j) >= lst.get(max)) {
                     action[j] = 2;
                     max = j;
-                    peakIsExist = true;
-                } else if (peakIsExist) {
+                } else {
                     action[j] = 1;
                 }
             }
+            action[N - 1] = 2;
 
             long answer = 0;    //오버플로
             int purchase = 0;
