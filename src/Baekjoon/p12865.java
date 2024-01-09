@@ -19,19 +19,44 @@ public class p12865 {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        List<Integer[]> components = new ArrayList<>();
+        List<Component> components = new ArrayList<>();
 
         for (int i=0; i<N; i++) {
             st = new StringTokenizer(br.readLine());
-            Integer[] component = new Integer[2];
-            component[0] = Integer.parseInt(st.nextToken());
-            component[1] = Integer.parseInt(st.nextToken());
+            Component component = new Component(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
             components.add(component);
         }
 
 
 
+
         bw.write(components.toString());
         bw.flush();
+    }
+
+    public static class Component{
+        int weight;
+        int value;
+
+        public Component(int weight, int value) {
+            this.weight = weight;
+            this.value = value;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
+
+        public void setWeight(int weight) {
+            this.weight = weight;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
     }
 }
