@@ -26,7 +26,7 @@ public class p1459 {
             answer += z * s;
             long t = x + y;
             if (s < w) {
-                answer += t / 2 * (s * 2);
+                answer += (t / 2) * (s * 2);
                 t %= 2;
             }
             answer += t * w;
@@ -35,5 +35,7 @@ public class p1459 {
             answer += (x + y) * w;
             bw.write(Long.toString(answer));
         }
+
+        bw.flush();
     }
 }
