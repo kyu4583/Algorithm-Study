@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 
 public class p12865 {
     static List<Component> components = new ArrayList<>();
-    static int[] maxValueTable;
+    static MaxSolution[] maxValueTable;
     static int N;
     static int K;
     public static void main(String[] args) throws Exception {
@@ -21,10 +21,10 @@ public class p12865 {
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
 
-        maxValueTable = new int[K];
-        maxValueTable[0] = 0;
-        for (int i=1; i<K; i++) {
-            maxValueTable[i] = -1;
+        maxValueTable = new MaxSolution[K+1];
+        maxValueTable[0] = new MaxSolution(0, new ArrayList<>());
+        for (int i=1; i<=K; i++) {
+            maxValueTable[i] = new MaxSolution(-1, new ArrayList<>());
         }
 
         for (int i=0; i<N; i++) {
@@ -32,29 +32,34 @@ public class p12865 {
             Component component = new Component(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
             components.add(component);
         }
-
-        bw.write(Integer.toString(maxValue(K)));
+        int answer = createMaxSolution(K).getMaxValue();
+        bw.write(Integer.toString(answer));
         bw.flush();
     }
 
-    private static int maxValue(int weight) {
+    private static MaxSolution createMaxSolution(int weight) {
         if (weight == 0) {
-            return 0;
+            return new MaxSolution(0, new ArrayList<>());
         }
-        int max = maxValue(weight - 1);
+        MaxSolution maxSolution = createMaxSolution(weight - 1);
         for (int i=0; i<N; i++) {
             Component nowComponent = components.get(i);
             int targetWeight = weight - nowComponent.getWeight();
             if(targetWeight >= 0) {
-                if(maxValueTable[targetWeight] == -1) {
-                    maxValueTable[targetWeight] = maxValue(targetWeight);
+                if(maxValueTable[targetWeight].getMaxValue() == -1) {
+                    maxValueTable[targetWeight] = createMaxSolution(targetWeight);
                 }
-                if(maxValueTable[targetWeight] + nowComponent.getValue() > max) {
-                    max = maxValueTable[targetWeight] + nowComponent.getValue();
+                if (maxValueTable[targetWeight].getIncludedIndex().contains(i)){
+                    continue;
+                }
+                if(maxValueTable[targetWeight].getMaxValue() + nowComponent.getValue() > maxSolution.getMaxValue()) {
+                    maxSolution.setMaxValue(maxValueTable[targetWeight].getMaxValue() + nowComponent.getValue());
+                    maxSolution.addIncludedIndex(i);
                 }
             }
         }
-        return max;
+        maxValueTable[weight] = maxSolution;
+        return maxSolution;
     }
 
     private static class Component{
@@ -80,6 +85,36 @@ public class p12865 {
 
         public void setValue(int value) {
             this.value = value;
+        }
+    }
+
+    private static class MaxSolution{
+        int maxValue;
+        List<Integer> includedIndex;
+
+        public MaxSolution(int maxValue, List<Integer> includedIndex) {
+            this.maxValue = maxValue;
+            this.includedIndex = includedIndex;
+        }
+
+        public int getMaxValue() {
+            return maxValue;
+        }
+
+        public void setMaxValue(int maxValue) {
+            this.maxValue = maxValue;
+        }
+
+        public List<Integer> getIncludedIndex() {
+            return includedIndex;
+        }
+
+        public void setIncludedIndex(List<Integer> includedIndex) {
+            this.includedIndex = includedIndex;
+        }
+
+        public void addIncludedIndex(int includedIndex) {
+            this.includedIndex.add(includedIndex);
         }
     }
 }
