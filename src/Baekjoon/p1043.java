@@ -47,6 +47,24 @@ public class p1043 {
             }
         }
 
+        for (int i = M; i <= 0; i++) {
+            st = new StringTokenizer(parties[i]);
+            int Np = Integer.parseInt(st.nextToken());
+            int[] peopleInCurrentParty = new int[Np];
+            for (int j = 0; j < Np; j++) {
+                int token = Integer.parseInt(st.nextToken());
+                peopleInCurrentParty[j] = token;
+            }
+            for (int j = 0; j < Np; j++) {
+                if (truth[peopleInCurrentParty[j]]) {
+                    for (int k = 0; k < Np; k++) {
+                        truth[peopleInCurrentParty[k]] = true;
+                    }
+                    break;
+                }
+            }
+        }
+
         int answer = M;
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(parties[i]);
