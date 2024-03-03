@@ -38,7 +38,7 @@ public class p12919 {
                 //int containB = passedB[rightIndex + 1] - passedB[leftIndex];
                 int rightB = totalB - passedB[rightIndex];
                 if (T.charAt(rightIndex) == 'B') {
-                    rightB += 1;
+                    rightB -= 1;
                 }
                 if (leftB == rightB) {
                     answerCorrect();
@@ -57,9 +57,9 @@ public class p12919 {
                     //int containB = passedB[rightIndex + 1] - passedB[leftIndex];
                     int rightB = totalB - passedB[rightIndex];
                     if (T.charAt(rightIndex) == 'B') {
-                        rightB += 1;
+                        rightB -= 1;
                     }
-                    if (rightB - leftB == 1) {
+                    if (leftB - rightB == 1) {
                         answerCorrect();
                         answerd = true;
                         break;
