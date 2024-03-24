@@ -15,68 +15,39 @@ public class p12919 {
         String S = st.nextToken();
         st = new StringTokenizer(br.readLine());
         String T = st.nextToken();
-        int lenS = S.length();
-        int lenT = T.length();
-        int[] passedB = new int[lenT];
-        int totalB = 0;
-        for (int i = 0; i < lenT; i++) {
-            passedB[i] = totalB;
-            if (T.charAt(i) == 'B') {
-                totalB += 1;
-            }
+
+        if (judge(S, T)) {
+            bw.write("1");
         }
-
-        StringBuilder builder = new StringBuilder(S);
-        String reversedS = builder.reverse().toString();
-
-        boolean answerd = false;
-        for (int i = 0; i < lenT - lenS + 1; i++) {
-            int leftIndex = i;
-            int rightIndex = i + lenS - 1;
-            if (T.substring(leftIndex, rightIndex + 1).equals(S)) {
-                int leftB = passedB[leftIndex];
-                //int containB = passedB[rightIndex + 1] - passedB[leftIndex];
-                int rightB = totalB - passedB[rightIndex];
-                if (T.charAt(rightIndex) == 'B') {
-                    rightB -= 1;
-                }
-                if (leftB == rightB) {
-                    answerCorrect();
-                    answerd = true;
-                    break;
-                }
-            }
-        }
-
-        if (!answerd) {
-            for (int i = 0; i < lenT - lenS + 1; i++) {
-                int leftIndex = i;
-                int rightIndex = i + lenS - 1;
-                if (T.substring(leftIndex, rightIndex + 1).equals(reversedS)) {
-                    int leftB = passedB[leftIndex];
-                    //int containB = passedB[rightIndex + 1] - passedB[leftIndex];
-                    int rightB = totalB - passedB[rightIndex];
-                    if (T.charAt(rightIndex) == 'B') {
-                        rightB -= 1;
-                    }
-                    if (leftB - rightB == 1) {
-                        answerCorrect();
-                        answerd = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (!answerd) {
+        else {
             bw.write("0");
-            bw.flush();
         }
-
-    }
-
-    public static void answerCorrect() throws IOException {
-        bw.write("1");
         bw.flush();
     }
+
+    public static boolean judge(String S, String T) {
+        if (S.equals(T)) {
+            return true;
+        }
+        StringBuilder builder = new StringBuilder(S);
+        String reversedS = builder.reverse().toString();
+        if (T.contains(S) || T.contains(reversedS)) {
+            String S_B = S + "B";
+            StringBuilder builder_B = new StringBuilder(S_B);
+            S_B = builder_B.reverse().toString();
+
+            String S_A = S + "A";
+
+            if (judge(S_A, T)|| judge(S_B, T)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
 }
